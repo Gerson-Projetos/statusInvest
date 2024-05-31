@@ -1,15 +1,16 @@
 # import pandas as pd
 import streamlit as st
-import time
+# import time
 
-from Classes.StatusInvest import stausInv
+from Classes.StatusInvest import statusInv
 
 def main():
     
-    stausInv.setaAcoes(['bbas3', 'bbse3'])
-    indicadores = stausInv.GetIndicadores()
-    
-    st.write(indicadores)
+    statusInv.setaAcoes(['bbas3', 'bbse3'])
+    indicadores = statusInv.GetIndicadores()
+    graham_method = statusInv.getGrahamMethod(indicadores)
+   
+    st.write(graham_method)
     
     
     # stausInv.getValues()

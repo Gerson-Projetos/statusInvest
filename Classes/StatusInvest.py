@@ -1,5 +1,7 @@
 import requests as req
 from bs4 import BeautifulSoup
+import pandas as pd
+import math
 
 from Classes.ConfigRequisicao import ConfigReq
 
@@ -106,5 +108,46 @@ class StatusInvest(ConfigReq):
                 valor_atual[acao] = erro
 
         return valor_atual
-            
-stausInv = StatusInvest()
+    
+    def getGrahamMethod(self, dados):
+        graham_data = {  
+            'Ticker': [],
+            'Cotação':[],
+            'Cotação LPA': [],
+            'Cotação VPA': [],
+            'P/L Hist': [],
+            'P/VP Hist': [],
+            'Coeficiente': [],
+            'Valor justo': [],
+            'Margem de segurança(%)': []
+        }
+        for acao in dados:
+            plH = dados[acao]['p_l']['avg']
+            vpH = dados[acao]['p_vp']['avg']
+            vpa = dados[acao]['vpa']['actual']
+            lpa = dados[acao]['lpa']['actual']
+            cotacao = dados[acao]['vl']['actual'].replace(',', '.')
+
+            coef = float(plH) * float(vpH)
+            valor_justo = math.sqrt(float(vpa)*float(lpa)*coef)
+            margen = (valor_justo*100)/(float(cotacao))-100
+
+            graham_data['Ticker'].append(acao)
+            graham_data['Cotação'].append(cotacao)
+
+            graham_data['Cotação VPA'].append(vpa)
+            graham_data['Cotação LPA'].append(lpa)
+           
+
+            graham_data['P/L Hist'].append(plH)
+            graham_data['P/VP Hist'].append(vpH)
+
+            graham_data['Coeficiente'].append(coef)
+            graham_data['Valor justo'].append(valor_justo)
+            graham_data['Margem de segurança(%)'].append(margen)    
+
+
+        df = pd.DataFrame(graham_data)
+        return df
+
+statusInv = StatusInvest()
