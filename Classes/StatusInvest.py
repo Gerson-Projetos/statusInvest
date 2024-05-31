@@ -1,5 +1,4 @@
 import requests as req
-import streamlit as st
 from bs4 import BeautifulSoup
 
 from Classes.ConfigRequisicao import ConfigReq

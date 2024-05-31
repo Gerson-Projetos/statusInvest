@@ -1,5 +1,3 @@
-import json as jsn
-import requests as req
 import streamlit as st
 
 
