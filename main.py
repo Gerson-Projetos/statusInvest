@@ -3,14 +3,14 @@ import streamlit as st
 import time
 
 from Classes.StatusInvest import statusInv
-
+from Classes.MetodoGraham import metodoGraham
 
 def main():
     
-    statusInv.setaAcoes(['bbas3', 'bbse3', 'fesa4', 'cmig4', 'neoe3', 'klbn11', 'taee11', 'itsa4','vale3','cxse3'])
+    statusInv.setaAcoes(['bbas3', 'bbse3', 'cmig4', 'neoe3', 'klbn11', 'taee11', 'itsa4','cxse3'])
     indicadores = statusInv.GetIndicadores()
     # st.write(indicadores)
-    graham_method = statusInv.getGrahamMethod(indicadores)
+    graham_method = metodoGraham.getIndicadores(indicadores)
   
  
 
